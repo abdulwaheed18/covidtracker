@@ -1,6 +1,7 @@
 package com.waheedtechblog.covid.service;
 
 import com.waheedtechblog.covid.domain.CovidResponse;
+import com.waheedtechblog.covid.domain.DistrictWiseReport;
 import com.waheedtechblog.covid.domain.StateCodes;
 import com.waheedtechblog.covid.domain.StateWise;
 
@@ -15,4 +16,6 @@ public interface CovidService {
     public List<StateWise> getStateWiseCases();
 
     public List<StateCodes> getStateCodes();
+
+    public DistrictWiseReport getStateCase(String stateCode);
 }
