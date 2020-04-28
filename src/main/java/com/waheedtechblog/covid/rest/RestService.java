@@ -1,5 +1,6 @@
 package com.waheedtechblog.covid.rest;
 
+import com.waheedtechblog.covid.domain.CovidResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
@@ -16,8 +17,8 @@ public class RestService {
     @Value("${covid.endpoint}")
     private String covidEndpoint;
 
-    public String exchange(String urlPath) {
-        return restTemplate.exchange(covidEndpoint + urlPath, HttpMethod.GET, null, String.class).getBody();
+    public CovidResponse exchange(String urlPath) {
+        return restTemplate.exchange(covidEndpoint + urlPath, HttpMethod.GET, null, CovidResponse.class).getBody();
     }
 
 
