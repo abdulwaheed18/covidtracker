@@ -18,7 +18,7 @@ public class SwaggerConfig {
             "abdulwaheed18@gmail.com");
 
     @SuppressWarnings("rawtypes")
-    public static final ApiInfo DEFAULT_API_INFO = new ApiInfo("Encoding Utils",
+    public static final ApiInfo DEFAULT_API_INFO = new ApiInfo("Covid 19 Tracker",
             "Covid 19 tracker", "1.0", "urn:tos", DEFAULT_CONTACT, "Apache 2.0",
             "http://www.apache.org/licenses/LICENSE-2.0", new ArrayList<VendorExtension>());
 
