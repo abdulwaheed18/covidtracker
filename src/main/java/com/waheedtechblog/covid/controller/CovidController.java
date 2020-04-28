@@ -1,5 +1,6 @@
 package com.waheedtechblog.covid.controller;
 
+import com.waheedtechblog.covid.domain.District;
 import com.waheedtechblog.covid.domain.DistrictWiseReport;
 import com.waheedtechblog.covid.domain.StateCodes;
 import com.waheedtechblog.covid.domain.StateWise;
@@ -40,9 +41,16 @@ public class CovidController {
         return ResponseEntity.ok(covidService.getStateCase(id));
     }
 
+    @GetMapping("/cityWise/{stateId}/{cityId}")
+    @ApiOperation(value = "Cases specific to city", response = String.class, produces = "application/json")
+    public ResponseEntity<District> stateWise(@ApiParam(value = "State Code", required=true, defaultValue = "MH") @PathVariable String stateId, @PathVariable String cityId){
+        return ResponseEntity.ok(covidService.getCityWiseCase(stateId,cityId));
+    }
+
     @GetMapping("/stateCode")
     @ApiOperation(value = "List of state Code", response = String.class, produces = "application/json")
     public ResponseEntity<List<StateCodes>> getStateCode(){
         return ResponseEntity.ok(covidService.getStateCodes());
     }
+
 }

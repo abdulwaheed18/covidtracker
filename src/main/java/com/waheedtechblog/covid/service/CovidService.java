@@ -1,9 +1,6 @@
 package com.waheedtechblog.covid.service;
 
-import com.waheedtechblog.covid.domain.CovidResponse;
-import com.waheedtechblog.covid.domain.DistrictWiseReport;
-import com.waheedtechblog.covid.domain.StateCodes;
-import com.waheedtechblog.covid.domain.StateWise;
+import com.waheedtechblog.covid.domain.*;
 
 import java.util.List;
 
@@ -18,4 +15,6 @@ public interface CovidService {
     public List<StateCodes> getStateCodes();
 
     public DistrictWiseReport getStateCase(String stateCode);
+
+    public District getCityWiseCase(String stateCode, String cityName);
 }

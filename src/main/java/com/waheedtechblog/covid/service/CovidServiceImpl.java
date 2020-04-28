@@ -65,6 +65,24 @@ public class CovidServiceImpl implements CovidService {
         return null;
     }
 
+    @Override
+    public District getCityWiseCase(String stateCode, String cityName) {
+        String covidResponse = restService.exchange("state_district_wise.json", String.class);
+
+        StateWiseDetailReport stateWiseDetailReport = getStateWiseDetailReport(covidResponse);
+        for(String state : stateWiseDetailReport.getDistrictWiseReport().keySet()){
+            DistrictWiseReport districtWiseReport = stateWiseDetailReport.getDistrictWiseReport().get(state);
+            if(districtWiseReport.getStatecode().equals(stateCode)){
+               for(String city : districtWiseReport.getDistricts().keySet()){
+                   if(city.equalsIgnoreCase(cityName)){
+                       return districtWiseReport.getDistricts().get(city);
+                   }
+               }
+            }
+        }
+        return null;
+    }
+
     private StateWiseDetailReport getStateWiseDetailReport(String covidResponse){
         StateWiseDetailReport stateWiseDetailReport = new StateWiseDetailReport();
         Map<String,DistrictWiseReport> districtWiseReportMap = new HashMap<>();
