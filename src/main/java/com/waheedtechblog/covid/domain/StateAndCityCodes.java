@@ -1,9 +1,13 @@
 package com.waheedtechblog.covid.domain;
 
-public class StateCodes {
+import java.util.HashSet;
+import java.util.Set;
+
+public class StateAndCityCodes {
 
     private String state;
     private String stateCode;
+    private Set<String> cityCodes;
 
     public String getState() {
         return state;
@@ -19,5 +23,15 @@ public class StateCodes {
 
     public void setStateCode(String stateCode) {
         this.stateCode = stateCode;
+    }
+
+    public Set<String> getCityCodes() {
+        if(cityCodes == null)
+            cityCodes = new HashSet<>();
+        return cityCodes;
+    }
+
+    public void setCityCodes(Set<String> cityCodes) {
+        this.cityCodes = cityCodes;
     }
 }

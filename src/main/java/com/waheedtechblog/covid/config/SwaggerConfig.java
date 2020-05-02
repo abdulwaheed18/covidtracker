@@ -11,6 +11,9 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 import java.util.ArrayList;
 
+/**
+ * @Author AbdulWaheed18@gmail.com
+ */
 @Configuration
 public class SwaggerConfig {
     // In case of any confusion, Always check for JAVA docs

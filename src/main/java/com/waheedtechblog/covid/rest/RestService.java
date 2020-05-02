@@ -6,6 +6,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * @Author AbdulWaheed18@gmail.com
+ */
 @Component
 public class RestService {
 

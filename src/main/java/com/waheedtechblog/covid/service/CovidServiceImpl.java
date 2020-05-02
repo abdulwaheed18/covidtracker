@@ -1,9 +1,11 @@
 package com.waheedtechblog.covid.service;
 
 import com.waheedtechblog.covid.domain.*;
+import com.waheedtechblog.covid.exception.InvalidInputException;
 import com.waheedtechblog.covid.rest.RestService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,6 +13,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @Author AbdulWaheed18@gmail.com
+ */
 @Service
 public class CovidServiceImpl implements CovidService {
 
@@ -23,13 +28,16 @@ public class CovidServiceImpl implements CovidService {
     }
 
     @Override
+    @Cacheable(cacheNames = "totalCases")
     public StateWise totalCases() {
+        StateWise sw = null;
         CovidResponse covidResponse = restService.exchange("data.json", CovidResponse.class);
         for (StateWise stateWise : covidResponse.getStateWise()) {
             if (stateWise.getState().equals("Total"))
-                return stateWise;
+                sw= stateWise;
+            break;
         }
-        return new StateWise();
+        return sw;
     }
 
     @Override
@@ -39,16 +47,19 @@ public class CovidServiceImpl implements CovidService {
     }
 
     @Override
-    public List<StateCodes> getStateCodes() {
-        CovidResponse covidResponse = restService.exchange("data.json", CovidResponse.class);
-        List<StateCodes> stateCodes = new ArrayList<>();
-        for (StateWise stateWise : covidResponse.getStateWise()) {
-            StateCodes codes = new StateCodes();
-            codes.setState(stateWise.getState());
-            codes.setStateCode(stateWise.getStatecode());
-            stateCodes.add(codes);
+    public List<StateAndCityCodes> getStateAndCityCodes() {
+        List<StateAndCityCodes> stateAndCityCodes =  new ArrayList<>();
+        String covidResponse = restService.exchange("state_district_wise.json", String.class);
+        StateWiseDetailReport stateWiseDetailReport = getStateWiseDetailReport(covidResponse);
+        for(String state : stateWiseDetailReport.getDistrictWiseReport().keySet()){
+            DistrictWiseReport districtWiseReport = stateWiseDetailReport.getDistrictWiseReport().get(state);
+            StateAndCityCodes stateAndCityCode = new StateAndCityCodes();
+            stateAndCityCode.setState(state);
+            stateAndCityCode.setStateCode(districtWiseReport.getStatecode());
+            stateAndCityCode.setCityCodes(districtWiseReport.getDistricts().keySet());
+            stateAndCityCodes.add(stateAndCityCode);
         }
-        return stateCodes;
+        return stateAndCityCodes;
     }
 
     @Override
@@ -62,7 +73,7 @@ public class CovidServiceImpl implements CovidService {
                 return districtWiseReport;
             }
         }
-        return null;
+        throw new InvalidInputException("State Code is Invalid, Hit /stateAndCityCode to get list of state codes");
     }
 
     @Override
@@ -80,7 +91,7 @@ public class CovidServiceImpl implements CovidService {
                }
             }
         }
-        return null;
+        throw new InvalidInputException("State/City Code is Invalid, Hit /stateAndCityCode to get list of state/city code");
     }
 
     private StateWiseDetailReport getStateWiseDetailReport(String covidResponse){

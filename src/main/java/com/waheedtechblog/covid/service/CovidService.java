@@ -4,6 +4,9 @@ import com.waheedtechblog.covid.domain.*;
 
 import java.util.List;
 
+/**
+ * @Author AbdulWaheed18@gmail.com
+ */
 public interface CovidService {
 
     public String getDayWiseRecord();
@@ -12,7 +15,7 @@ public interface CovidService {
 
     public List<StateWise> getStateWiseCases();
 
-    public List<StateCodes> getStateCodes();
+    public List<StateAndCityCodes> getStateAndCityCodes();
 
     public DistrictWiseReport getStateCase(String stateCode);
 

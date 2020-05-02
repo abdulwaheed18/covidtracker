@@ -2,7 +2,7 @@ package com.waheedtechblog.covid.controller;
 
 import com.waheedtechblog.covid.domain.District;
 import com.waheedtechblog.covid.domain.DistrictWiseReport;
-import com.waheedtechblog.covid.domain.StateCodes;
+import com.waheedtechblog.covid.domain.StateAndCityCodes;
 import com.waheedtechblog.covid.domain.StateWise;
 import com.waheedtechblog.covid.service.CovidService;
 import io.swagger.annotations.Api;
@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * @Author AbdulWaheed18@gmail.com
+ */
 @RestController
 @Api(value = "Endpoint to access covid 19 records")
 public class CovidController {
@@ -43,14 +46,14 @@ public class CovidController {
 
     @GetMapping("/cityWise/{stateId}/{cityId}")
     @ApiOperation(value = "Cases specific to city", response = String.class, produces = "application/json")
-    public ResponseEntity<District> stateWise(@ApiParam(value = "State Code", required=true, defaultValue = "MH") @PathVariable String stateId, @PathVariable String cityId){
+    public ResponseEntity<District> stateWise(@ApiParam(value = "State Code", required=true, defaultValue = "MH") @PathVariable String stateId, @ApiParam(value = "City Name", required=true, defaultValue = "Pune") @PathVariable String cityId){
         return ResponseEntity.ok(covidService.getCityWiseCase(stateId,cityId));
     }
 
-    @GetMapping("/stateCode")
-    @ApiOperation(value = "List of state Code", response = String.class, produces = "application/json")
-    public ResponseEntity<List<StateCodes>> getStateCode(){
-        return ResponseEntity.ok(covidService.getStateCodes());
+    @GetMapping("/stateAndCityCode")
+    @ApiOperation(value = "List of state and its cities", response = String.class, produces = "application/json")
+    public ResponseEntity< List<StateAndCityCodes>> getStateAndCityCodes(){
+        return ResponseEntity.ok(covidService.getStateAndCityCodes());
     }
 
 }

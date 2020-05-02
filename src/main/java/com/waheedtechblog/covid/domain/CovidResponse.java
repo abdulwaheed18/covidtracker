@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @Author AbdulWaheed18@gmail.com
+ */
 public class CovidResponse {
 
     @JsonProperty("cases_time_series")
