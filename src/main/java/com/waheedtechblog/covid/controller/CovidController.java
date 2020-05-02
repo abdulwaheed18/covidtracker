@@ -6,6 +6,7 @@ import com.waheedtechblog.covid.domain.StateAndCityCodes;
 import com.waheedtechblog.covid.domain.StateWise;
 import com.waheedtechblog.covid.service.CovidService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,8 @@ import java.util.List;
  * @Author AbdulWaheed18@gmail.com
  */
 @RestController
-@Api(value = "Endpoint to access covid 19 records")
+//Added description hack to disable model on Swagger UI page
+@Api(value = "Endpoint to access covid 19 records", description="API <style>.models {display: none !important}</style>")
 public class CovidController {
 
     @Autowired
@@ -28,12 +30,14 @@ public class CovidController {
 
     @GetMapping("/totalCases")
     @ApiOperation(value = "Total number of cases in India", response = String.class, produces = "application/json")
+
     public ResponseEntity<StateWise> totalCases(){
         return ResponseEntity.ok(covidService.totalCases());
     }
 
     @GetMapping("/stateWise")
     @ApiOperation(value = "State wise test Cases", response = String.class, produces = "application/json")
+    @ApiModelProperty(hidden= true)
     public ResponseEntity<List<StateWise>> stateWise(){
         return ResponseEntity.ok(covidService.getStateWiseCases());
     }

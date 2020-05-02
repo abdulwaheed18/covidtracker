@@ -28,7 +28,7 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
 
-        return new Docket(DocumentationType.SWAGGER_2).apiInfo(DEFAULT_API_INFO).select()
+        return new Docket(DocumentationType.SWAGGER_2).apiInfo(DEFAULT_API_INFO).useDefaultResponseMessages(false).select()
                 .apis(RequestHandlerSelectors.basePackage("com.waheedtechblog.covid")).build();
     }
 }
