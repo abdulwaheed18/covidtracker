@@ -69,7 +69,7 @@ public class CovidServiceImpl implements CovidService {
         StateWiseDetailReport stateWiseDetailReport = getStateWiseDetailReport(covidResponse);
         for(String state : stateWiseDetailReport.getDistrictWiseReport().keySet()){
             DistrictWiseReport districtWiseReport = stateWiseDetailReport.getDistrictWiseReport().get(state);
-            if(districtWiseReport.getStatecode().equals(stateCode)){
+            if(districtWiseReport.getStatecode().equalsIgnoreCase(stateCode)){
                 return districtWiseReport;
             }
         }
@@ -83,7 +83,7 @@ public class CovidServiceImpl implements CovidService {
         StateWiseDetailReport stateWiseDetailReport = getStateWiseDetailReport(covidResponse);
         for(String state : stateWiseDetailReport.getDistrictWiseReport().keySet()){
             DistrictWiseReport districtWiseReport = stateWiseDetailReport.getDistrictWiseReport().get(state);
-            if(districtWiseReport.getStatecode().equals(stateCode)){
+            if(districtWiseReport.getStatecode().equalsIgnoreCase(stateCode)){
                for(String city : districtWiseReport.getDistricts().keySet()){
                    if(city.equalsIgnoreCase(cityName)){
                        return districtWiseReport.getDistricts().get(city);
